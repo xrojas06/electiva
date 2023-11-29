@@ -151,7 +151,7 @@ const Navbar = (props) => {
                                     </Link>
                                 )}
                                 {(hoveredNavItem === nav.id || clickedNavItem === nav.id) && nav.subnavlinks && (
-                                    <ul className="bg-red-200 absolute mt-2 bg-white border rounded shadow-lg">
+                                    <ul className="bg-red-300 absolute mt-2 bg-white border rounded shadow-lg">
                                         {nav.subnavlinks.map((subnav) => (
                                             <li key={subnav.id} className="py-2 px-4">
                                                 <a href={subnav.path}>{subnav.title}</a>
