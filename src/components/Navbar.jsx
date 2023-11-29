@@ -25,7 +25,7 @@ const Navbar = (props) => {
         setClickedNavItem(clickedNavItem === navId ? null : navId);
     };
     return (
-        <nav className="w-full flex flex-col py-6 justify-between items-center navbar">
+        <nav className="w-full flex sm:flex-col py-6 justify-between items-center navbar">
             <Link to={'/'}><img src={rainbow} alt="" className="w-[180px] h-[77px] mb-5" /></Link>
 
 
@@ -102,21 +102,67 @@ const Navbar = (props) => {
                 <div
                     className={`${
                         !toggle ? "hidden" : "flex"
-                    } p-6 bg-primaryred absolute top-20 right-0 mx-4 my-2 min-w-[140px] rounded-xl sidebar`}
+                    } p-6 bg-babyblue absolute text-white top-20 right-0 mx-4 my-2 min-w-[140px] rounded-xl sidebar`}
                 >
-                    <ul className="list-none flex justify-end items-start flex-1 flex-col">
+                    <ul className=" bg-babyblue list-none flex justify-end items-start flex-1 flex-col">
                         {navLinks.map((nav, index) => (
                             <li
                                 key={nav.id}
-                                className={`font-Heebo font-medium cursor-pointer text-[16px] ${
-                                    active === nav.title ? "text-white" : "text-dimWhite"
-                                } ${index === navLinks.length - 1 ? "mb-0" : "mb-4"}`}
-                                onClick={() => setActive(nav.title)}
+                                className={`font-Heebo font-semibold cursor-pointer text-[16px] ${index === navLinks.length - 1 ? "mr-0" : "mr-10"}`}
+                                onMouseEnter={() => handleMouseEnter(nav.id)}
+                                onMouseLeave={handleMouseLeave}
                             >
-                                <a href={`#${nav.id}`}>{nav.title}</a>
+                                {nav.subnavlinks ? (
+                                    <div
+                                        onClick={() => handleItemClick(nav.id)}
+                                        className="flex flex-row items-center"
+                                    >
+                                        {nav.title}{' '}
+                                        <svg
+                                            className="-mr-1 h-5 w-5 text-gray-400 ml-1"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                            aria-hidden="true"
+                                        >
+                                            <path
+                                                fillRule="evenodd"
+                                                d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                                clipRule="evenodd"
+                                            />
+                                        </svg>
+                                    </div>
+                                ) : (
+                                    <Link to={nav.path} className="flex flex-row items-center">
+                                        {nav.title}{' '}
+                                        {nav.subnavlinks && (
+                                            <svg
+                                                className="-mr-1 h-5 w-5 text-gray-400 ml-1"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                                aria-hidden="true"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                        )}
+                                    </Link>
+                                )}
+                                {(hoveredNavItem === nav.id || clickedNavItem === nav.id) && nav.subnavlinks && (
+                                    <ul className="bg-red-200 absolute mt-2 bg-white border rounded shadow-lg">
+                                        {nav.subnavlinks.map((subnav) => (
+                                            <li key={subnav.id} className="py-2 px-4">
+                                                <a href={subnav.path}>{subnav.title}</a>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
                             </li>
                         ))}
                     </ul>
+
                 </div>
             </div>
         </nav>
